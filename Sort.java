@@ -4,6 +4,12 @@ public class Sort {
 
     public static void main (String[] args) {
 
+    if (args.length<1) {
+    	System.out.println("You need to input size of array to be sorted, e.g. ");
+    	System.out.println("Java Sort 100");
+    	System.exit(1);
+    }
+
 	ThreadMXBean bean = ManagementFactory.getThreadMXBean();   // NOTE
 
 	int N = Integer.parseInt(args[0]);
@@ -24,7 +30,7 @@ public class Sort {
 	    
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
 	    insertionSort(c);
-	    print(c);
+	    //print(c);
 	    System.out.printf ("Insertion sort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
@@ -39,7 +45,7 @@ public class Sort {
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
 	    
 	    mergeSort(c);
-	    print(c);
+	    //print(c);
 	    System.out.printf ("Mergesort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
@@ -51,7 +57,7 @@ public class Sort {
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
 	    
 	    quickSort(c,0,c.length-1);
-	    print(c);
+	    //print(c);
 	    System.out.printf ("Quicksort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	} 
