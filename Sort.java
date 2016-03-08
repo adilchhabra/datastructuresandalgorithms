@@ -1,4 +1,5 @@
 import java.lang.management.*;   // NOTE
+import java.util.Random.*;
 
 public class Sort {
 
@@ -106,7 +107,9 @@ public class Sort {
 	}
     }
 
-public static void mergeSort(int [] a) {
+
+
+    public static void mergeSort(int [] a) {
 		int n = a.length;
 		if(n<2) return;
 
@@ -121,6 +124,8 @@ public static void mergeSort(int [] a) {
 		mergeSort(right);
 		merge(a, left, right);
 	}
+
+
 
 	private static void merge(int [] a, int [] left, int[] right) {
 		int nL = left.length;
@@ -159,7 +164,11 @@ public static void mergeSort(int [] a) {
 
 	public static int partition(int [] a, int p, int r) {
 		int n = a.length;
-		int pivot = a[r];
+        int pivotIdx = (int) (p+(Math.random()*((r-p)+1)));
+	    //System.out.println(pivotIdx); //Tests value of new pivot
+        int pivot = a[pivotIdx];
+        a[pivotIdx]=a[r];
+        a[r]=pivot;
 		int lastSmall = p;
 		int temp;
 
