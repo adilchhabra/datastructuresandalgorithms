@@ -24,7 +24,7 @@ public class Sort {
 	// array, and then record the current "user time".  After running the
 	// sort, I compute the elapsed time by taking the difference between the
 	// time and the time from before the sort.
-/*
+
 	{
 	    int[] c = new int[N];
 	    for (int i=0; i<N; ++i) c[i] = a[i];
@@ -35,7 +35,7 @@ public class Sort {
 	    System.out.printf ("Insertion sort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
-	  */  
+	   
 	
 	
 	 
@@ -51,7 +51,7 @@ public class Sort {
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
 
-	/*{
+	{
 	    int[] c = new int[N];
 	    for (int i=0; i<N; ++i) c[i] = a[i];
 	    
@@ -61,7 +61,7 @@ public class Sort {
 	    //print(c);
 	    System.out.printf ("Quicksort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
-	} */
+	} 
     } 
     /////////////////////////////////////////////////////////////////////////
     // This method prints the contents of an array.  You might use it during
@@ -108,9 +108,10 @@ public class Sort {
     }
 
     public static void iterativeMergeSort(int[] a, int [] temp) {
-        for (int blockSize=1; blockSize<a.length; blockSize*=2)
+        for (int blockSize=1; blockSize<a.length; blockSize*=2) {
          for (int p=0; p<a.length; p+=2*blockSize)
             imerge(a, temp, p, p+blockSize, p+2*blockSize);
+        }
     }
 
     public static void imerge(int [] a, int [] temp, int p, int mid, int r) {
