@@ -45,9 +45,9 @@ public class Sort {
 	    
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
 	    int[] temp = new int[N]; //temprorary array same size as 'a'
-	    mergeSort(c, temp, 0, a.length);
+	    iterativeMergeSort(c, temp);
 	    //print(c);
-	    System.out.printf ("Mergesort took %f seconds.\n",     // NOTE
+	    System.out.printf ("Iterative mergesort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
 
@@ -107,15 +107,20 @@ public class Sort {
 	}
     }
 
-    public static void mergeSort(int[] a, int [] temp, int p, int r) {
-        int n = r - p; //length of array       
-        if (n <= 1)  //base case
-            return; 
-        int mid = p + n/2;  //element in middle of recurrence array
-        mergeSort(a, temp, p, mid); //recurrence on first half
-        mergeSort(a, temp, mid, r); //recurrence on second half
+    public static void iterativeMergeSort(int[] a, int [] temp) {
+        for (int blockSize=1; blockSize<a.length; blockSize*=2)
+         for (int p=0; p<a.length; p+=2*blockSize)
+            imerge(a, temp, p, p+blockSize, p+2*blockSize);
+    }
+
+    public static void imerge(int [] a, int [] temp, int p, int mid, int r) {
+        if (mid>=a.length)  //test if mid and r are in range
+            return;
+        if (r>a.length) 
+        	r=a.length; //if split array is not of exact size 
+
         int i = p, j = mid;
-        for (int k = 0; k < n; k++) 
+        for (int k = p; k < r; k++) 
         {
             if (i == mid)  //if all elemets of left done
                 temp[k] = a[j++];
@@ -126,9 +131,10 @@ public class Sort {
             else               //if right greater than left
                 temp[k] = a[j++];
         }    
-        for (int k = 0; k < n; k++) //insert back sorted values
-            a[p + k] = temp[k];         
+        for (int k = p; k < r; k++) //insert back sorted values
+            a[k] = temp[k];         
     }
+
 
 	public static void quickSort(int [] a, int p, int r) {
 		if(p<r) {
