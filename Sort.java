@@ -24,7 +24,7 @@ public class Sort {
 	// array, and then record the current "user time".  After running the
 	// sort, I compute the elapsed time by taking the difference between the
 	// time and the time from before the sort.
-
+/*
 	{
 	    int[] c = new int[N];
 	    for (int i=0; i<N; ++i) c[i] = a[i];
@@ -35,7 +35,7 @@ public class Sort {
 	    System.out.printf ("Insertion sort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
-	    
+	  */  
 	
 	
 	 
@@ -45,13 +45,13 @@ public class Sort {
 	    
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
 	    
-	    mergeSort(c);
+	    mergeSort(c, 0, a.length);
 	    //print(c);
 	    System.out.printf ("Mergesort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
 	}
 
-	{
+	/*{
 	    int[] c = new int[N];
 	    for (int i=0; i<N; ++i) c[i] = a[i];
 	    
@@ -61,8 +61,8 @@ public class Sort {
 	    //print(c);
 	    System.out.printf ("Quicksort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
-	} 
-    }
+	} */
+    } 
     /////////////////////////////////////////////////////////////////////////
     // This method prints the contents of an array.  You might use it during
     // debugging.
@@ -107,52 +107,29 @@ public class Sort {
 	}
     }
 
-
-
-    public static void mergeSort(int [] a) {
-		int n = a.length;
-		if(n<2) return;
-
-		int mid = n/2;
-		int [] left = new int[mid];
-		int [] right = new int[n-mid];
-		for(int i=0; i<mid; i++) 
-			left[i]=a[i];
-		for(int i=mid; i<n; i++)
-			right[i-mid]=a[i];
-		mergeSort(left);
-		mergeSort(right);
-		merge(a, left, right);
-	}
-
-
-
-	private static void merge(int [] a, int [] left, int[] right) {
-		int nL = left.length;
-		int nR = right.length;
-		int i=0, j=0, k=0;
-		while (i<nL && j<nR) {
-			if(left[i]<=right[j]) {
-				a[k]=left[i];
-				i++;
-			}
-			else {
-				a[k]=right[j];
-				j++;
-			}
-			k++;
-		}
-		while(i<nL) {
-			a[k]=left[i];
-			i++;
-			k++;
-		}
-		while(j<nR) {
-			a[k]=right[j];
-			j++;
-			k++;
-		}
-	}
+    public static void mergeSort(int[] a, int p, int r) {
+        int n = r - p; //length of array       
+        if (n <= 1)  //base case
+            return; 
+        int mid = p + n/2;  //element in middle of recurrence array
+        mergeSort(a, p, mid); //recurrence on first half
+        mergeSort(a, mid, r); //recurrence on second half
+        int[] temp = new int[n]; //temprorary array same size as 'a'
+        int i = p, j = mid;
+        for (int k = 0; k < n; k++) 
+        {
+            if (i == mid)  //if all elemets of left done
+                temp[k] = a[j++];
+            else if (j == r) //if all elements of right done
+                temp[k] = a[i++];
+            else if (a[i]<a[j]) //if left greater than right
+                temp[k] = a[i++];
+            else               //if right greater than left
+                temp[k] = a[j++];
+        }    
+        for (int k = 0; k < n; k++) //insert back sorted values
+            a[p + k] = temp[k];         
+    }
 
 	public static void quickSort(int [] a, int p, int r) {
 		if(p<r) {
