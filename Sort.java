@@ -44,8 +44,8 @@ public class Sort {
 	    for (int i=0; i<N; ++i) c[i] = a[i];
 	    
 	    long t = bean.getCurrentThreadUserTime();   // NOTE  (t is a *long*)
-	    
-	    mergeSort(c, 0, a.length);
+	    int[] temp = new int[N]; //temprorary array same size as 'a'
+	    mergeSort(c, temp, 0, a.length);
 	    //print(c);
 	    System.out.printf ("Mergesort took %f seconds.\n",     // NOTE
 			       (bean.getCurrentThreadUserTime()-t) / 1e9);
@@ -107,14 +107,13 @@ public class Sort {
 	}
     }
 
-    public static void mergeSort(int[] a, int p, int r) {
+    public static void mergeSort(int[] a, int [] temp, int p, int r) {
         int n = r - p; //length of array       
         if (n <= 1)  //base case
             return; 
         int mid = p + n/2;  //element in middle of recurrence array
-        mergeSort(a, p, mid); //recurrence on first half
-        mergeSort(a, mid, r); //recurrence on second half
-        int[] temp = new int[n]; //temprorary array same size as 'a'
+        mergeSort(a, temp, p, mid); //recurrence on first half
+        mergeSort(a, temp, mid, r); //recurrence on second half
         int i = p, j = mid;
         for (int k = 0; k < n; k++) 
         {
